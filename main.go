@@ -3,9 +3,16 @@ package main
 import (
 	"fmt"
 	"ganasa18/attandance-be-mobile/app"
+	"ganasa18/attandance-be-mobile/exception"
 	"ganasa18/attandance-be-mobile/helper"
+	"ganasa18/attandance-be-mobile/routes"
 	"net/http"
 	"os"
+
+	routeshandler "ganasa18/attandance-be-mobile/routes/handler"
+
+	"github.com/go-playground/validator"
+	"github.com/julienschmidt/httprouter"
 )
 
 func main() {
@@ -23,12 +30,23 @@ func main() {
 	}
 
 	// DB CONNECTION INITIAL
-	// db := app.NewDB()
-	app.NewDB()
+	db := app.NewDB()
+	validate := validator.New()
+
+	//  SETUP ROUTES CONTROLLER
+	userRouteHandler := routeshandler.SetupUserHandlerRoute(db, validate)
+
+	// ROUTES PANIC
+	router := httprouter.New()
+	routes.ApiUserRoute(router, userRouteHandler)
+	routes.ApiRouteTest(router)
+
+	router.PanicHandler = exception.ErrorHandler
 
 	//SERVER
 	server := http.Server{
-		Addr: host + ":" + port,
+		Addr:    host + ":" + port,
+		Handler: router,
 		// Handler: middleware.NewAuthMiddleware(router),
 	}
 

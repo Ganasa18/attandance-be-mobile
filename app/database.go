@@ -53,6 +53,7 @@ func NewDB() *sql.DB {
 	// migrate create -ext sql -dir db/migrations create_table_third
 	// migrate create -ext sql -dir db/migrations sample_dirty_state
 	// migrate -database "mysql://root@tcp(localhost:3306)/belajar_golang_database_migration" -path db/migrations up
+	// migrate -database "postgres://postgres:admin@localhost:5432/db_attandance_mobile?sslmode=disable" -path db/migrations up
 	// migrate -database "mysql://root@tcp(localhost:3306)/belajar_golang_database_migration" -path db/migrations down
 	// migrate -database "mysql://root@tcp(localhost:3306)/belajar_golang_database_migration" -path db/migrations version
 	// migrate -database "mysql://root@tcp(localhost:3306)/belajar_golang_database_migration" -path db/migrations force 20220922043738
