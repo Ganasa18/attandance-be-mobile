@@ -1,0 +1,90 @@
+openapi: "3.0.2"
+info:
+  title: MAttandance Restfull API
+  version: "1.0"
+servers:
+  - url: http://localhost:3002/api/v1/
+paths:
+  /user:
+    get:
+      tags: ["Users API"]
+      description: List all User
+      summary: List all User
+      parameters:
+        - name: page
+          in: query
+          description: The page number to retrieve
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: limit
+          in: query
+          description: The limit perpage number to retrieve
+          required: false
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          description: Success get all user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  status:
+                    type: string
+                    example: "OK"
+                  listData:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+                  pageInfo:
+                    type: object
+                    properties:
+                      total:
+                        type: number
+                        example: 3
+                      per_page:
+                        type: number
+                        example: 2
+                      current_page:
+                        type: number
+                        example: 1
+                      total_page:
+                        type: number
+                        example: 2
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        username:
+          type: string
+          example: "userroot"
+        email:
+          type: string
+          example: "email@example.com"
+        password:
+          type: string
+          example: "61gdwakhsfbkjasdgylhg.hgwnadwahkuhkb"
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time

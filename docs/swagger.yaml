@@ -1,0 +1,239 @@
+openapi: "3.0.2"
+info:
+  title: MAttandance Restfull API
+  version: "1.0"
+servers:
+  - url: http://localhost:3002/api/v1/
+paths:
+  /api/v1/user:
+    get:
+      tags: ["Users API"]
+      description: List all User
+      summary: List all User
+      parameters:
+        - name: page
+          in: query
+          description: The page number to retrieve
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: limit
+          in: query
+          description: The limit perpage number to retrieve
+          required: false
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          description: Success get all user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  status:
+                    type: string
+                    example: "OK"
+                  listData:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+                  pageInfo:
+                    type: object
+                    properties:
+                      total:
+                        type: number
+                        example: 3
+                      per_page:
+                        type: number
+                        example: 2
+                      current_page:
+                        type: number
+                        example: 1
+                      total_page:
+                        type: number
+                        example: 2
+  /api/v1/user/{userId}:
+    get:
+      tags: ["Users API"]
+      description: Get User By Id
+      summary: Get One User
+      parameters:
+        - name: userId
+          in: query
+          description: The user id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Find One User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  status:
+                    type: string
+                    example: "OK"
+                  data:
+                    $ref: "#/components/schemas/User"
+
+  /api/v1/userLogin:
+    post:
+      tags: ["Auth API"]
+      description: Login User Registered
+      summary: Login User Registered
+      requestBody:
+        description: request body login
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "email@gmail18.com"
+                password:
+                  type: string
+                  example: "12345"
+      responses:
+        "200":
+          description: Login Register User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  status:
+                    type: string
+                    example: "OK"
+                  data:
+                    $ref: "#/components/schemas/UserLogin"
+  /api/v1/userRegister:
+    post:
+      tags: ["Auth API"]
+      description: Register New User
+      summary: Create New User
+      requestBody:
+        description: request body register
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "username18"
+                email:
+                  type: string
+                  example: "email@gmail18.com"
+                password:
+                  type: string
+                  example: "12345"
+      responses:
+        "200":
+          description: Login Register User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  status:
+                    type: string
+                    example: "OK"
+                  data:
+                    $ref: "#/components/schemas/UserRegister"
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        username:
+          type: string
+          example: "userroot"
+        email:
+          type: string
+          example: "email@example.com"
+        password:
+          type: string
+          example: "61gdwakhsfbkjasdgylhg.hgwnadwahkuhkb"
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+    UserLogin:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        username:
+          type: string
+          example: "userroot"
+        email:
+          type: string
+          example: "email@example.com"
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsInVzZXJuYW1lIjoidXNlcm5hbWUxOCIsImVtYWlsIjoiZW1haWxAZ21haWwxOC5jb20iLCJleHAiOjE3MDIzNjA3MTYsIm5iZiI6MTcwMjI3NDMxNiwiaWF0IjoxNzAyMjc0MzE2fQ.62Ipvb9OazqBgrx40G_9BytAaEn5utNiWq5YLrwNKcc"
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    UserRegister:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        username:
+          type: string
+          example: "userroot"
+        email:
+          type: string
+          example: "email@example.com"
+        password:
+          type: string
+          example: "$2a$10$dhb9CvaOGrR3hiXSeuDi0ujrHknwIJK.iYItAZvxdDzOo6JaUPAp."
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
