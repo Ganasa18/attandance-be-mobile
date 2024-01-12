@@ -9,5 +9,5 @@ import (
 
 func ApiUserMenuAccessRoute(router *httprouter.Router, userMenuAccessController controller.UserMenuAccessController) {
 	router.POST("/api/v1/user-menu-access", middleware.CustomAuthMiddleware(userMenuAccessController.CreateUserMenuAccess))
-	router.GET("/api/v1/user-menu-access/user", userMenuAccessController.GetUserMenuAccess)
+	router.GET("/api/v1/user-menu-access/user", middleware.CustomAuthMiddleware(userMenuAccessController.GetUserMenuAccess))
 }
